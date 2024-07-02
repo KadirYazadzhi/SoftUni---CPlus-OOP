@@ -47,6 +47,6 @@ int main() {
     Person * personPointer = &person;
     personPonter->makePersonOlder(1);
     personPointer->printPersonInfo();
-    
+
     return 0;
 }
