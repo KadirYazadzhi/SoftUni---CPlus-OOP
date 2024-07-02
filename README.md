@@ -2,7 +2,7 @@
 
 Welcome to the repository for C++ OOP course tasks from SoftUni!
 
-<img src="C++ Advanced preview.png">
+<img src="C++ OOP preview.png">
 
 ## 📖 Introduction
 This repository contains a collection of tasks from the C++ OOP course at SoftUni. The tasks are organized according to the topics and exercises covered in the course. Each task is thoroughly tested, but if you encounter any issues, feel free to reach out.
