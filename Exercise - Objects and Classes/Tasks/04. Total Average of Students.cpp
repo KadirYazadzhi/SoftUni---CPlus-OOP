@@ -54,3 +54,4 @@ int main(void) {
     cout << (grandTotalAverage / data.size()) << endl;
 }
 
+
