@@ -18,7 +18,7 @@ public:
     }
 
     void print () {
-        std::cout << this->id << " (" << this->capitalDollars << ") " << std::endl;
+        std::cout << this->id << " (" << this->capitalDollars << ")" << std::endl;
     }
 
     bool isValidId(std::string id) {
