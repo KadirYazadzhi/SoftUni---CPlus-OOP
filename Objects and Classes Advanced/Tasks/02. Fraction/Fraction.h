@@ -6,7 +6,7 @@ class Fraction {
 	int denominator;
 
 public:
-	Fraction(int num, int denom) : numerator(num), denominator(denom) {}
+	Fraction(int num = 0, int denom = 1) : numerator(num), denominator(denom) {}
 
 	int getNumerator() {
 		return this->numerator;
@@ -19,4 +19,24 @@ public:
 	bool operator<(const Fraction& other) const {
 		return this->numerator * other.denominator < other.numerator * this->denominator;
 	}
+
+    Fraction operator ++ (int) {
+        Fraction curr = *this;
+
+        numerator = denominator;
+
+        return currl
+    }
+
+    Fraction & operator ++ (void) {
+        numerator += denominator;
+
+        return *this;
+    }
+
+    friend istream & operator >> (istream & is, Fraction &f);
 };
+
+inline istream & operator >> (istream & is, Fraction &f) {
+    return is >> f.numerator >> f.denominator;
+}
