@@ -2,7 +2,6 @@
 
 #include "Car.h"
 
-// Function that call Print of all Getters
 void PrintInfo( const Car& objCar )
 {
     cout << "Brand -> " << objCar.GetBrand() << endl;
