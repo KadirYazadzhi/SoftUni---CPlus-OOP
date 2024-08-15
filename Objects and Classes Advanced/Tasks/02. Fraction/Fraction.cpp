@@ -26,4 +26,14 @@ int main() {
 
     Fraction fR = myF1 + f13;
     cout << fR << endl;
+
+    fR = myF1 - Fraction(1, 12);
+    cout << fR << endl;
+
+    Fraction first, second;
+    cin >> first >> second;
+
+    cout << (first == second) << endl;
+
+    return 0;
 }
