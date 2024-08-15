@@ -1,4 +1,4 @@
-#include "SumOfVectors.h"
+#include "Sum Of Vectors.h"
 
 #include <vector>
 #include <string>

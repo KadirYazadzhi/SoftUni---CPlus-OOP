@@ -1,5 +1,5 @@
-#ifndef SUMOFVECTORS_H
-#define SUMOFVECTORS_H
+#ifndef SUM OF VECTORS_H
+#define SUM OF VECTORS_H
 
 #include <vector>
 #include <string>
