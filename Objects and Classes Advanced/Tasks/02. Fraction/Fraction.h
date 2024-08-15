@@ -34,9 +34,21 @@ public:
         return *this;
     }
 
-    friend istream & operator >> (istream & is, Fraction &f);
+    Fraction operator + (const Fraction & other) const {
+
+        return Fraction (
+            this->numerator * other.denominator + other.numerator * this->denominator,
+            this->denominator * other.denominator
+        );
+    }
+
+    friend std::istream & operator >> (std::istream & is, Fraction &f);
 };
 
-inline istream & operator >> (istream & is, Fraction &f) {
+inline std::istream & operator >> (std::istream & is, Fraction &f) {
     return is >> f.numerator >> f.denominator;
+}
+
+std::ostream & operator << (std::ostream & os, const Fraction & f) {
+    return os << f.getNumerator() << "/" << f.getDenominator();
 }

@@ -23,4 +23,7 @@ int main() {
 
     cin >> myF1;
     cout << "You entered: " << myF1 << " value." << endl;
+
+    Fraction fR = myF1 + f13;
+    cout << fR << endl;
 }
