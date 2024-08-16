@@ -56,7 +56,7 @@ namespace SoftUni {
         return istr;
     }
 
-    std::ostream & operator << (std::ostream & out, const Resource & r) { 
+    std::ostream & operator << (std::ostream & out, const Resource & r) {
         out << r.getId() << ' ' << r.getType() << ' ' << r.getLink();
 
         return out;
