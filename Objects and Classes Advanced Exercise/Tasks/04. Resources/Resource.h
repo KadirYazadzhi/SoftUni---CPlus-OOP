@@ -8,7 +8,7 @@ namespace SoftUni {
     private:
         int id;
         ResourceType rt;
-        std::string link; 
+        std::string link;
     public:
         int getId(void) const {
             return id;
@@ -18,7 +18,7 @@ namespace SoftUni {
             return rt;
         }
 
-        const std::string & getLink(void) const { // Премахната е излишната точка и запетая тук
+        const std::string & getLink(void) const {
             return link;
         }
 
@@ -29,7 +29,7 @@ namespace SoftUni {
         }
     };
 
-    std::istream & operator >> (std::istream & in, enum ResourceType & t) { // Променена е 'out' на 'in'
+    std::istream & operator >> (std::istream & in, enum ResourceType & t) {
         std::string buff;
         in >> buff;
 
@@ -56,7 +56,7 @@ namespace SoftUni {
         return istr;
     }
 
-    std::ostream & operator << (std::ostream & out, const Resource & r) { // Поправена е грешката в 'coonst'
+    std::ostream & operator << (std::ostream & out, const Resource & r) { 
         out << r.getId() << ' ' << r.getType() << ' ' << r.getLink();
 
         return out;
