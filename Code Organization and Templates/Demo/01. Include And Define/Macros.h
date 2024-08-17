@@ -1,5 +1,5 @@
 #define PI 3.14
 
-#include<iostream>
+#include <iostream>
 
 #define SHOW(something) std::cout << something << std::endl;
