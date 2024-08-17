@@ -12,4 +12,4 @@ enum ErrorCode
 
 
 
-#endif /* DEFINES_H_ */
+#endif
