@@ -68,7 +68,7 @@ class Command {
 
 
 
-ErrorCode executeCommand(const string & command, vector<int *> & memory) {
+ErrorCode executeCommand(const std::string & command, std::vector<int *> & memory) {
     Command c(command, memory);
 
     return c.execute();
