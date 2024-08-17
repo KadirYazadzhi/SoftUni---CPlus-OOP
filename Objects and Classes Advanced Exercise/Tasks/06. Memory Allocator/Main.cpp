@@ -4,93 +4,80 @@
 #include <sstream>
 #include "Defines.h"
 
-static int allocated = 1;
-
 using namespace std;
 
 class Command {
-    private:
-        string command;
-        int idx;
-        vector<int *> & memory;
+    static int allocated;
+    string command;
+    int idx;
 
-    private:
-        ErrorCode allocate() {
-            if (memory[idx] == nullptr) {
-                memory[idx] = &allocated;
+    vector<int *> &memory;
 
-                return ErrorCode::EXECUTE_SUCCESS;
-            }
-            else {
-                return ErrorCode::MEMORY_LEAK;
-            }
-        }
-
-        ErrorCode deallocate() {
-            if (memory[idx] == &allocated) {
-                memory[idx] = nullptr;
-
-                return ErrorCode::EXECUTE_SUCCESS;
-            }
-            else {
-                return ErrorCode::DOUBLE_FREE;
-            }
-        }
-
-    public:
-        Command (const string & cmd, vector<int *> & memory) : memory(memory), idx(0) {
-            istringstream istr(cmd);
-
-            istr >> command;
-            if (command != "Idle") {
-                istr >> idx;
-            }
-        }
-
-        ErrorCode execute() {
-            if (idx >= memory.size()) {
-                return ErrorCode::INDEX_OUT_OF_BOUND;
-            }
-
-            if (command == "Allocate") {
-                return allocate();
-            }
-            else if (command == "Deallocate") {
-                return deallocate();
-            }
-            else if (command == "Idle") {
-                return ErrorCode::EXECUTE_IDLE;
-            }
-
+private:
+    ErrorCode allocate() {
+        if (memory[idx] == nullptr) {
+            memory[idx] = &allocated;
             return ErrorCode::EXECUTE_SUCCESS;
-        }
+        } else
+            return ErrorCode::MEMORY_LEAK;
+    }
+
+    ErrorCode deallocate() {
+        if (memory[idx] == &allocated) {
+            memory[idx] = nullptr;
+            return ErrorCode::EXECUTE_SUCCESS;
+        } else
+            return ErrorCode::DOUBLE_FREE;
+    }
+
+public:
+    Command(const string &cmd, vector<int *> &memory) : memory(memory) {
+        istringstream istr(cmd);
+        istr >> command;
+        if (command != "Idle")
+            istr >> idx;
+        else
+            idx = 0;
+    }
+
+    ErrorCode execute() {
+        if (idx >= memory.size())
+            return ErrorCode::INDEX_OUT_OF_BOUND;
+        if (command == "Allocate")
+            return allocate();
+        if (command == "Deallocate")
+            return deallocate();
+        if (command == "Idle")
+            return ErrorCode::EXECUTE_IDLE;
+
+        return ErrorCode::EXECUTE_SUCCESS;
+    }
 };
 
+int Command::allocated = 1;
 
-
-ErrorCode executeCommand(const std::string & command, std::vector<int *> & memory) {
+ErrorCode executeCommand(const string &command, vector<int *> &memory) {
     Command c(command, memory);
 
     return c.execute();
 }
 
-void printResult(const ErrorCode errorCode, const std::string & command) {
-    cout << command;
+void printResult(const ErrorCode errorCode, const string &command) {
     switch (errorCode) {
         case ErrorCode::EXECUTE_SUCCESS:
-            cout << " - success" << endl;
+            cout << command << " - " << "success" << endl;
             break;
         case ErrorCode::DOUBLE_FREE:
-            cout << " - system crash prevented, will skip this deallocation" << endl;
+            cout << command << " - " << "system crash prevented, will skip this deallocation" << endl;
             break;
         case ErrorCode::EXECUTE_IDLE:
-            cout << " - this exam is a piece of cake! Where is the OOP already?!?" << endl;
+            cout << command << " - " << "this exam is a piece of cake! Where is the OOP already?!?" << endl;
             break;
         case ErrorCode::INDEX_OUT_OF_BOUND:
-            cout << " - out of bound" << endl;
+            cout << command << " - " << "out of bound" << endl;
             break;
         case ErrorCode::MEMORY_LEAK:
-            cout << " - memory leak prevented, will not make allocation" << endl;
+            cout << command << " - " << "memory leak prevented, will not make allocation" << endl;
             break;
     }
 }
