@@ -38,24 +38,27 @@ class Command {
         }
 
     public:
-        Command (const string & cmd, vector<int *> & memory) : memory(memory) {
+        Command (const string & cmd, vector<int *> & memory) : memory(memory), idx(0) {
             istringstream istr(cmd);
 
-            istr >> command >> idx;
+            istr >> command;
+            if (command != "Idle") {
+                istr >> idx;
+            }
         }
 
         ErrorCode execute() {
-            if (idx > memory.size()) {
+            if (idx >= memory.size()) {
                 return ErrorCode::INDEX_OUT_OF_BOUND;
             }
 
             if (command == "Allocate") {
                 return allocate();
             }
-            if (command == "Deallocate") {
+            else if (command == "Deallocate") {
                 return deallocate();
             }
-            if (command == "Idle") {
+            else if (command == "Idle") {
                 return ErrorCode::EXECUTE_IDLE;
             }
 
@@ -65,7 +68,7 @@ class Command {
 
 
 
-ErrorCode executeCommand(const std::string &  command,std::vector<int *> & memory) {
+ErrorCode executeCommand(const string & command, vector<int *> & memory) {
     Command c(command, memory);
 
     return c.execute();
