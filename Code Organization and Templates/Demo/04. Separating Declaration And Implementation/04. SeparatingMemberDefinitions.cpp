@@ -4,31 +4,33 @@
 #include <vector>
 #include <utility>
 
+using namespace std;
+
 class Company {
 private:
 	int id;
-	std::string name;
-	std::vector<std::pair<char, char> > employees;
+	string name;
+	vector<pair<char, char> > employees;
 
 public:
-	Company(int id, std::string name, std::vector<std::pair<char, char> > employees);
+	Company(int id, string name, vector<pair<char, char> > employees);
 
 	int getId() const;
 
-	std::string getName() const;
+	string getName() const;
 
-	std::vector<std::pair<char, char> > getEmployees() const;
+	vector<pair<char, char> > getEmployees() const;
 
-	std::string toString() const;
+	string toString() const;
 
 	bool operator==(const Company& other) const;
 
-	std::string operator+(const std::string& s);
+	string operator+(const string& s);
 
-	Company& operator+=(const std::pair<char, char>& employee);
+	Company& operator+=(const pair<char, char>& employee);
 };
 
-Company::Company(int id, std::string name, std::vector<std::pair<char, char> > employees)
+Company::Company(int id, string name, vector<pair<char, char> > employees)
 	: id(id)
 	, name(name)
 	, employees(employees) {}
@@ -37,16 +39,16 @@ int Company::getId() const {
 	return this->id;
 }
 
-std::string Company::getName() const {
+string Company::getName() const {
 	return this->name;
 }
 
-std::vector<std::pair<char, char> > Company::getEmployees() const {
+vector<pair<char, char> > Company::getEmployees() const {
 	return this->employees;
 }
 
-std::string Company::toString() const {
-	std::ostringstream stream;
+string Company::toString() const {
+	ostringstream stream;
 	stream << id << " " << name << " ";
 
 	for (int i = 0; i < employees.size(); i++) {
@@ -64,22 +66,26 @@ bool Company::operator==(const Company& other) const {
 	return this->id == other.id;
 }
 
-std::string Company::operator+(const std::string& s) {
+string Company::operator+(const string& s) {
 	return this->toString() + s;
 }
 
-Company& Company::operator+=(const std::pair<char, char>& employee) {
+Company& Company::operator += (const pair<char, char>& employee) {
 	this->employees.push_back(employee);
 
 	return *this;
 }
 
 int main() {
-	Company c(42, "TheAnswer Inc.", { { 'G', 'L' },{ 'H', 'F' },{ 'G', 'G' } });
+	Company c(42, "TheAnswer Inc.", {
+        { 'G', 'L' },
+        { 'H', 'F' },
+        { 'G', 'G' }
+    });
 
 	c += { 'W', 'P' };
 
-	std::cout << c + " <- this is a cool company" << std::endl;
+	cout << c + " <- this is a cool company" << endl;
 
 	return 0;
 }
