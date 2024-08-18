@@ -11,5 +11,5 @@ public:
 	}
 };
 
-#endif // !NOTE_NAME_H
+#endif
 
