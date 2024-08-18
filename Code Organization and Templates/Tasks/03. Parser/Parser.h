@@ -11,7 +11,7 @@ class Parser {
         std::istream & is;
         std::string stopLine;
     public:
-        Parser(std::istream & is, std::string stopLine) : is(is), stopLine(stopLine) {}
+        Parser(std::istream & is, const std::string & stopLine) : is(is), stopLine(stopLine) {}
 
         bool readNext(T & t) {
             std::string line;
