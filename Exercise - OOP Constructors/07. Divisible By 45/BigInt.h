@@ -1,9 +1,9 @@
 #ifndef BIG_INT_H
 #define BIG_INT_H
 
-#include<string>
-#include<sstream>
-#include<cmath>
+#include <string>
+#include <sstream>
+#include <cmath>
 
 class BigInt {
 protected:
