@@ -22,6 +22,6 @@ Company Register::get(int companyId) const {
             return companiesArray[idx];
         }
     }
-    
+
     return Company();
 }
