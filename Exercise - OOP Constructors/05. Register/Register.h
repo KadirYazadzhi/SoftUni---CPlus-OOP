@@ -19,5 +19,5 @@ public:
 	Register(const Register& other) = delete;
 };
 
-#endif // !REGISTER_H
+#endif
 
