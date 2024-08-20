@@ -10,7 +10,7 @@ Register::~Register() {
 
 Register & Register::operator=(const Register &other) {
     if (this == &other) {
-        return *this; 
+        return *this;
     }
 
     Company *otherCompanies = new Company[other.numAdded];
