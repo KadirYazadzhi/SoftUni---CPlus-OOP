@@ -4,8 +4,7 @@
 #include <iostream>
 #include <vector>
 
-class Matrix
-{
+class Matrix {
     public:
         Matrix() = default;
         ~Matrix() = default;
@@ -23,4 +22,4 @@ class Matrix
         std::vector<std::vector<int>> _data;
 };
 
-#endif /* MATRIX_H_ */
+#endif

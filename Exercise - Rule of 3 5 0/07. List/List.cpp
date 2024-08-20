@@ -68,7 +68,7 @@ std::string List::toString() const {
 }
 
 void List::add(int value) {
-    Node * newNode = new Node(value, tail, nullptr); 
+    Node * newNode = new Node(value, tail, nullptr);
 
     if (size == 0) {
         head = tail = newNode;
