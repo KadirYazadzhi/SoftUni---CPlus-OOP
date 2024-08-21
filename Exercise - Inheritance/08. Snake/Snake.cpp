@@ -1,10 +1,10 @@
 #include "Snake.h"
 
 Snake::Snake(const int fieldRows, const int fieldCols, const Point &startPos)
-: _FIELD_ROWS(fieldRows),
-_FIELD_COLS(fieldCols),
-_currPos(startPos),
-_snakeNodes(1, startPos) {}
+        : _FIELD_ROWS(fieldRows),
+          _FIELD_COLS(fieldCols),
+          _currPos(startPos),
+          _snakeNodes(1, startPos) {}
 
 Snake::~Snake() {}
 
@@ -12,8 +12,8 @@ std::deque<Point> & Snake::getSnakeNodes() {
     return _snakeNodes;
 }
 
-StatusCode Snake::move(const Direction dir, const std::vector <Point> &obstacles, std::vector <Point> &powerUps) {
-  Point newPos(_currPos);
+StatusCode Snake::move(const Direction dir, const std::vector<Point> &obstacles, std::vector<Point> &powerUps) {
+    Point newPos(_currPos);
 
     switch (dir) {
         case Direction::UP:
@@ -34,32 +34,33 @@ StatusCode Snake::move(const Direction dir, const std::vector <Point> &obstacles
         return StatusCode::SNAKE_DEAD;
     }
 
-    for (auto & o : obstacles) {
+    for (const auto &o : obstacles) {
         if (o == newPos) {
             return StatusCode::SNAKE_DEAD;
         }
     }
 
-    for (auto & o : _snakeNodes) {
-        if (o == newPos) {
+    for (const auto &node : _snakeNodes) {
+        if (node == newPos) {
             return StatusCode::SNAKE_DEAD;
         }
     }
 
-    bool powerUp = false;
-    for (auto o = powerUps.begin(); o != powerUps.end(); o++) {
-        if (*o == newPos) {
-            powerUp = true;
-            powerUps.erase(o);
+    bool powerUpConsumed = false;
+    for (auto it = powerUps.begin(); it != powerUps.end(); ++it) {
+        if (*it == newPos) {
+            powerUpConsumed = true;
+            powerUps.erase(it);
             break;
         }
     }
 
-    _snakeNodes.push_back(newPos);
+    _snakeNodes.push_front(newPos);
     _currPos = newPos;
-    if (!powerUp) {
+
+    if (!powerUpConsumed) {
         _snakeNodes.pop_back();
     }
 
-    return powerUp == true ? StatusCode::SNAKE_GROWING : StatusCode::SNAKE_MOVING;
+    return powerUpConsumed ? StatusCode::SNAKE_GROWING : StatusCode::SNAKE_MOVING;
 }
