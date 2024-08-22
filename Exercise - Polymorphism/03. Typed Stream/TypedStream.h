@@ -20,7 +20,7 @@ public:
     std::vector<T> readToEnd() {
         std::vector<T> res;
 
-        t curr;
+        T curr;
         while (true) {
             *this >> curr;
             if ((bool) stream == false) {
