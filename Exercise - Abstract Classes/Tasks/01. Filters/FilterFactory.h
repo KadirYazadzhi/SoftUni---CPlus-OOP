@@ -24,11 +24,17 @@ protected:
 
 class FilterFactory {
     public:
-        Filter * buildFilter(filterDefinition) const {
+        Filter * buildFilter(std::string& filterDefinition) const {
             switch (filterDefinition[0]) {
-                case 'A': return new AZFilter;
-                case 'a': return new azFilter;
-                case '0': return new FilterDigitsOneToNine;
+                case 'A':
+                    return new AZFilter;
+                    break;
+                case 'a':
+                    return new azFilter;
+                    break;
+                case '0':
+                    return new FilterDigitsOneToNine;
+                    break;
             }
 
             return nullptr;
