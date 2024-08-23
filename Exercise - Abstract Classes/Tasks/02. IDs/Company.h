@@ -4,27 +4,29 @@
 #include "HasId.h"
 #include "HasInfo.h"
 #include <vector>
+#include <string>
+#include <sstream>
 
 class Company : public HasId, public HasInfo {
-private:
-    int id;
-    std::string name;
-    std::vector<std::pair<char, char>> employees;
+    protected:
+        int id;
+        std::string name;
+        std::vector<std::pair<char, char>> employees;
 
-public:
-    Company();
-    Company(int id, std::string name, std::vector<std::pair<char, char>> employees);
+    public:
+        Company();
+        Company(int id, std::string name, std::vector<std::pair<char, char>> employees);
 
-    virtual int getId() const override;
+        virtual int getId() const override;
 
-    std::string getName() const;
+        std::string getName() const;
 
-    std::vector<std::pair<char, char>> getEmployees() const;
+        std::vector<std::pair<char, char>> getEmployees() const;
 
-    virtual std::string getInfo() const override;
+        virtual std::string getInfo() const override;
 
-    friend std::ostream & operator << (std::ostream & stream, const Company & c);
-    friend std::istream & operator >> (std::istream & stream, Company & c);
+        friend std::ostream & operator << (std::ostream & stream, const Company & c);
+        friend std::istream & operator >> (std::istream & stream, Company & c);
 
 };
 
