@@ -2,62 +2,95 @@
 #define EXTRACTORINITIALIZATION_H
 
 #include <memory>
+#include <string>
+#include <istream>
+#include <cctype>
 #include <sstream>
+
 #include "Extractor.h"
+#include "BufferedExtractor.h"
 
-class DigitsExtractor : public Extractor {
-    public:
-        DigitsExtractor(std::istream & istr) : Extractor(istr) {}
-        virtual bool process(char symbol, std::string & output) override {
-            if (symbol >= '0' && symbol <= '9') {
-                output = std::string(1, symbol);
-                return true;
-            }
+class DigitsExtractor: public Extractor {
 
+public:
+    DigitsExtractor(std::istream & istr) : Extractor(istr) {};
+
+    virtual bool process(char symbol, std::string & output){
+        if (symbol>='0' && symbol <='9'){
+            output=std::string(1,symbol);
+            return true;
+        };
+        return false;
+    };
+};
+
+class NumbersExtractor: public Extractor {
+
+    std::string result;
+
+public:
+    NumbersExtractor(std::istream & istr) : Extractor(istr) {};
+
+protected:
+    virtual bool process(char symbol, std::string & output){
+        if (isdigit(symbol)) {
+            result+=std::string(1,symbol);
             return false;
         }
+        else if (result.size()) {
+            output=result;
+            result.erase();
+            return true;
+        };
+        return false;
+    };
 };
 
-class NumbersExtractor : public BufferedExtractor {
-    public:
-        NumbersExtractor(std::istream & istr) : BufferedExtractor(istr) {}
+class QuotesExtractor: public Extractor {
 
-        virtual bool shouldBuffer(char symbol) override {
-            return symbol >= '0' && symbol <= '9';
-        }
-};
+    std::string result;
+    bool extracting;
 
-class QuotedExtractor : public BufferedExtractor {
-    private:
-        bool isBuffering;
-    public:
-        QuotedExtractor(std::istream & istr) : BufferedExtractor(istr), isBuffering(false) {}
+public:
+    QuotesExtractor(std::istream & istr) : Extractor(istr), extracting(false) {};
 
-        virtual bool shouldBuffer(char symbol) override {
-            if (symbol == '"') {
-                isBuffering = !isBuffering;
-                return false;
+protected:
+    virtual bool process(char symbol, std::string & output){
+        if(extracting) {
+            if (symbol=='"') {
+                output=result;
+                result.erase();
+                extracting=false;
+                return true;
             }
             else {
-                return isBuffering;
-            }
+                result+=symbol;
+            };
         }
+        else {
+            if (symbol=='"') {
+                extracting=true;
+            };
+        };
+        return false;
+    };
 };
 
-std::shared_ptr<Extractor> getExtractor(const std::string & extractType, std::istringstream & lineIn) {
-    switch(extractType[0]) {
-        case 'd':
-            return std::make_shared<DigitsExtractor>(lineIn);
-            break;
-        case 'n':
-            return std::make_shared<NumbersExtractor>(lineIn);
-            break;
-        default:
-            return std::make_shared<QuotedExtractor>(lineIn);
-            break;
+std::shared_ptr<Extractor> getExtractor(const std::string & extractType, std::istream & lineIn) {
+
+    if (extractType=="digits") {
+        return std::shared_ptr<Extractor>(new DigitsExtractor(lineIn));
+    }
+    else if (extractType=="numbers") {
+        return std::shared_ptr<Extractor>(new NumbersExtractor(lineIn));
+    }
+    else {
+        return std::shared_ptr<Extractor>(new QuotesExtractor(lineIn));
     }
 
-    return std::shared_ptr<Extractor>();
-}
+
+    return std::shared_ptr<Extractor>(nullptr);
+};
 
 #endif
+
